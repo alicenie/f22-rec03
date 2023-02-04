@@ -12,9 +12,8 @@ import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
-
 /**
- * TODO: Write more unit tests to test the implementation of ArrayIntQueue
+ * todo: Write more unit tests to test the implementation of ArrayIntQueue
  * for the {@link LinkedIntQueue} and
  * {@link ArrayIntQueue} classes, as described in the handout. The
  * {@link ArrayIntQueue} class contains a few bugs. Use the tests you wrote for
@@ -33,8 +32,8 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-//        mQueue = new ArrayIntQueue();
+        // mQueue = new LinkedIntQueue();
+        mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
     }
@@ -48,6 +47,13 @@ public class IntQueueTest {
     public void testNotEmpty() {
         mQueue.enqueue(1);
         assertFalse(mQueue.isEmpty());
+    }
+
+    @Test
+    public void testClear() {
+        mQueue.enqueue(1);
+        mQueue.clear();
+        assertTrue(mQueue.isEmpty());
     }
 
     @Test
@@ -81,6 +87,22 @@ public class IntQueueTest {
     }
 
     @Test
+    public void testDequeueEmptyQueue() {
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
+    public void testEnsureCapacity() {
+        // to make head > 0
+        mQueue.enqueue(1);
+        mQueue.dequeue();
+        // to run out of initial size
+        for (int i = 0; i < 11; i++) {
+            mQueue.enqueue(i);
+        }
+    }
+
+    @Test
     public void testContent() throws IOException {
         InputStream in = new FileInputStream("src/test/resources/data.txt");
         try (Scanner scanner = new Scanner(in)) {
@@ -99,6 +121,5 @@ public class IntQueueTest {
             }
         }
     }
-
 
 }
