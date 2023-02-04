@@ -14,42 +14,42 @@ import { IntQueue } from './queue'
  */
 function newArrayIntQueue (): IntQueue {
   /**
-     * An array holding this queue's data
-     */
+   * An array holding this queue's data
+   */
   let elementData: number[] = []
 
   /**
-     * Index of the next dequeue-able value
-     */
+   * Index of the next dequeue-able value
+   */
   let head: number = 0
 
   /**
-     * Current size of queue
-     */
+   * Current size of queue
+   */
   let size: number = 0
 
   /**
-     * The initial size for new instances of ArrayQueue
-     */
+   * The initial size for new instances of ArrayQueue
+   */
   const INITIAL_SIZE = 10
 
   /**
-     * Constructs an empty queue with an initial capacity of ten.
-     *
-     * Note, this is somewhat artificial translation from the Java code
-     * where arrays always have a fixed size. Here we simulate fixed size
-     * array's by sealing them. Typically one would just take advantage of
-     * the existing flexibility of JavaScript arrays that are always dynamic,
-     * but then this Queue implementation would be kind of trivial.
-     */
+   * Constructs an empty queue with an initial capacity of ten.
+   *
+   * Note, this is somewhat artificial translation from the Java code
+   * where arrays always have a fixed size. Here we simulate fixed size
+   * array's by sealing them. Typically one would just take advantage of
+   * the existing flexibility of JavaScript arrays that are always dynamic,
+   * but then this Queue implementation would be kind of trivial.
+   */
   elementData = new Array(INITIAL_SIZE)
   elementData.fill(0)
   Object.seal(elementData)
 
   /**
-     * Increases the capacity of this <tt>ArrayIntQueue</tt> instance, if
-     * necessary, to ensure that it can hold at least size + 1 elements.
-     */
+   * Increases the capacity of this <tt>ArrayIntQueue</tt> instance, if
+   * necessary, to ensure that it can hold at least size + 1 elements.
+   */
   function ensureCapacity (): void {
     if (size === elementData.length) {
       const oldCapacity = elementData.length
@@ -94,17 +94,17 @@ function newArrayIntQueue (): IntQueue {
     },
 
     isEmpty: function (): boolean {
-      return size >= 0
+      return size === 0
     },
 
     peek: function (): number | null {
-      return elementData[head]
+      const tail = (head + size) % elementData.length
+      return size === 0 ? null : elementData[tail - 1]
     },
 
     size: function (): number {
       return size
     }
-
   }
 }
 
